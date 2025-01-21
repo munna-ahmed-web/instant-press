@@ -26,7 +26,7 @@ const Home = () => {
       const data = await getNewsList(categoryValue);
       setNewsListItems(data?.items);
       setTotalItems(data?.["total-count"]);
-      // console.log(data);
+      console.log(data);
       setLoading(false);
     } catch (error) {
       console.log("error getting from getnews function", error);
