@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getNewsList } from "../../api/newsRequest";
 import NewsGridComponent from "./NewsGridComponent";
+import LoadingSpinner from "../../components/shared/UI/LoadingSpinner";
+import Pagination from "rc-pagination";
+import "rc-pagination/assets/index.css"; // Import default styles
 
 const Home = () => {
+  const defaultCategory = "latest";
   const { categoryName } = useParams();
 
   //news state
   const [loading, setLoading] = useState(false);
-  const [categoryValue, setCategoryValue] = useState("latest");
   const [newsListItems, setNewsListItems] = useState([]);
 
   //pagination state
@@ -23,7 +26,10 @@ const Home = () => {
   const fetchNewsLists = async () => {
     try {
       setLoading(true);
-      const data = await getNewsList(categoryValue);
+      const data = await getNewsList(
+        categoryName || defaultCategory,
+        currentPage
+      );
       setNewsListItems(data?.items);
       setTotalItems(data?.["total-count"]);
       console.log(data);
@@ -37,12 +43,24 @@ const Home = () => {
 
   useEffect(() => {
     fetchNewsLists();
-  }, [categoryName]);
+  }, [categoryName, currentPage]);
 
   return (
     <div>
-      <h1>Instant Press</h1>
-      <NewsGridComponent newsList={newsListItems} />
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <NewsGridComponent newsList={newsListItems} />
+      )}
+
+      <div className="flex justify-center mb-4">
+        <Pagination
+          total={totalItems}
+          onChange={handlePageChange}
+          pageSize={itemsPerPage}
+          current={currentPage}
+        />
+      </div>
     </div>
   );
 };

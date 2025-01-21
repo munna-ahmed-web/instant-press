@@ -1,7 +1,9 @@
 import axios from "axios";
 
-export const getNewsList = async (category = "latest") => {
-  const url = `https://api.pewds.vercel.app/prothomalo/collection/${category}?start_from=0&per_page=15`;
+export const getNewsList = async (category = "latest", currentPage = 1) => {
+  const perPage = 15; // Number of items per page
+  const startFrom = (currentPage - 1) * perPage; // Calculate the starting index for the API query
+  const url = `https://api.pewds.vercel.app/prothomalo/collection/${category}?start_from=${startFrom}&per_page=${perPage}`;
   try {
     const response = await axios.get(url);
     return response.data;

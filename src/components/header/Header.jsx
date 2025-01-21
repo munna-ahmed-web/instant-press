@@ -1,5 +1,7 @@
 import { useState } from "react";
 import logo from "../../assets/logo.webp";
+import { categoryListData } from "../../data/categoriListData";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -62,18 +64,17 @@ const Header = () => {
               isMenuOpen ? "block" : "hidden"
             } lg:flex lg:items-center space-x-4`}
           >
-            <a href="#" className="text-white hover:text-gray-200">
-              Home
-            </a>
-            <a href="#about" className="text-white hover:text-gray-200">
-              About
-            </a>
-            <a href="#services" className="text-white hover:text-gray-200">
-              Services
-            </a>
-            <a href="#contact" className="text-white hover:text-gray-200">
-              Contact
-            </a>
+            {categoryListData.map((item) => {
+              return (
+                <Link
+                  key={item.label}
+                  className="text-white hover:text-gray-200"
+                  to={`newsByCategory/${item.value}`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
         </div>
 
