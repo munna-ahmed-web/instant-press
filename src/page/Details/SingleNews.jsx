@@ -10,6 +10,7 @@ const SingleNews = ({
   moreNews = [],
   shareOptions = [],
   publishedTime,
+  author = "",
 }) => {
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -19,23 +20,14 @@ const SingleNews = ({
         <h1 className="text-xl font-semibold text-gray-800 text-center mx-auto">
           {title}
         </h1>
-        <div className="flex content-between space-x-4 mt-3">
-          <p className="text-sm text-gray-500">
-            প্রকাশ:<span className="ml-1">{publishedTime}</span>
-          </p>
-          <div className="flex space-x-2">
-            {shareOptions.length > 0 &&
-              shareOptions?.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={option.action}
-                  className="text-blue-500 hover:text-blue-600"
-                >
-                  {option.icon}
-                </button>
-              ))}
-          </div>
-        </div>
+      </div>
+      <div className="flex justify-between items-center mt-3">
+        <p className="text-sm text-gray-500">
+          প্রকাশ:<span className="ml-1">{publishedTime}</span>
+        </p>
+        <p className="text-sm text-gray-500">
+          Author:<span className="ml-1">{author || "Unknown"}</span>
+        </p>
       </div>
 
       {/* News Image */}

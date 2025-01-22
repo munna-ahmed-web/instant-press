@@ -27,6 +27,8 @@ const NewsDetails = () => {
     fetchNewsDetails();
   }, [id]);
 
+  console.log(selectedNews);
+
   return (
     <div>
       <div>
@@ -40,6 +42,7 @@ const NewsDetails = () => {
               selectedNews?.story?.["content-created-at"]
             )}
             description={selectedNews?.story?.summary}
+            author={selectedNews?.story?.["author-name"]}
           />
         )}
       </div>
