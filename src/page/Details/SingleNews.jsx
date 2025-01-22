@@ -1,3 +1,6 @@
+import StoryCard from "../../components/shared/card/StoryCard";
+import VideoPlayer from "../../components/shared/media/VideoPlayer";
+
 const baseImageUrl = import.meta.env.VITE_IMAGE_BASE_URL;
 
 const SingleNews = ({
@@ -32,30 +35,58 @@ const SingleNews = ({
       </div>
 
       {/* News Image */}
-      <div className="my-6">
-        <img
-          src={`${baseImageUrl}/${image}`}
-          alt={title}
-          className="w-full h-64 object-cover rounded-md shadow-md"
-        />
-      </div>
+      {image && (
+        <div className="my-6">
+          <img
+            src={`${baseImageUrl}/${image}`}
+            alt={title}
+            className="w-full h-64 object-cover rounded-md shadow-md"
+          />
+        </div>
+      )}
 
-      {/* News Description */}
+      <hr className="my-6" />
+
+      {/* ============================News Description================================= */}
       <div className="text-gray-700 text-lg leading-relaxed">
         <div>
           {description.length > 0 &&
             description.map((item) => {
               return (
                 <div key={item.id} className="space-y-4">
+                  {/* -----this is for rendering all the news---- */}
                   {item?.["story-elements"].map((singleStory) => {
                     return (
-                      <div
-                        key={singleStory.id}
-                        className="bg-white p-4 rounded-lg shadow-md mb-1"
-                      >
-                        <div
-                          dangerouslySetInnerHTML={{ __html: singleStory.text }}
-                        />
+                      <div key={singleStory.id}>
+                        {singleStory?.type == "title" ? (
+                          <h3 className="bg-white py-2 rounded-lg text-xl font-semibold text-gray-800">
+                            {singleStory.text}
+                          </h3>
+                        ) : singleStory?.type === "text" ? (
+                          singleStory?.subtype == "also-read" ? (
+                            <StoryCard
+                              singleStory={singleStory.text}
+                              linkTo={`/news/${singleStory?.metadata?.["linked-story"]?.id}`}
+                            />
+                          ) : (
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: singleStory.text,
+                              }}
+                            />
+                          )
+                        ) : singleStory?.type === "image" ? (
+                          <div className="my-6">
+                            <img
+                              src={`${baseImageUrl}/${singleStory?.["image-s3-key"]}`}
+                              className="w-full h-full object-cover rounded-md shadow-md"
+                            />
+                          </div>
+                        ) : singleStory?.type === "youtube-video" ? (
+                          <VideoPlayer videoUrl={singleStory?.url} />
+                        ) : (
+                          ""
+                        )}
                       </div>
                     );
                   })}
@@ -63,33 +94,6 @@ const SingleNews = ({
               );
             })}
         </div>
-      </div>
-
-      {/* More News Section */}
-      <div className="mt-12">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">More News</h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {moreNews.length > 0 &&
-            moreNews.map((news, index) => (
-              <li
-                key={index}
-                className="p-4 bg-white shadow-md rounded-lg hover:shadow-lg transition"
-              >
-                <h3 className="text-md font-bold text-gray-800">
-                  {news.title}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2">{news.description}</p>
-                <a
-                  href={news.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline mt-2 block"
-                >
-                  Read More
-                </a>
-              </li>
-            ))}
-        </ul>
       </div>
     </div>
   );

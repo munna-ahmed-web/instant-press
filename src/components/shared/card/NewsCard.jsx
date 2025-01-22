@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 const baseImageUrl = import.meta.env.VITE_IMAGE_BASE_URL;
 
-const NewsCard = ({ title, image, description, time, link }) => {
+const NewsCard = ({ title, image, description, time, link, className }) => {
   return (
-    <div className="max-w-sm bg-white rounded-lg shadow-md overflow-hidden">
+    <div
+      className={`max-w-sm bg-white rounded-lg shadow-md overflow-hidden ${className}`}
+    >
       <img
         className="w-full h-48 object-cover"
         src={`${baseImageUrl}/${image}`}
