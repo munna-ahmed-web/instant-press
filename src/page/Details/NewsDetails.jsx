@@ -27,7 +27,7 @@ const NewsDetails = () => {
     fetchNewsDetails();
   }, [id]);
 
-  // console.log("details news", selectedNews);
+  console.log("details news", selectedNews);
 
   return (
     <div>
