@@ -27,7 +27,7 @@ const NewsDetails = () => {
     fetchNewsDetails();
   }, [id]);
 
-  console.log(selectedNews);
+  // console.log("details news", selectedNews);
 
   return (
     <div>
@@ -41,7 +41,7 @@ const NewsDetails = () => {
             publishedTime={convertToLocalTime(
               selectedNews?.story?.["content-created-at"]
             )}
-            description={selectedNews?.story?.summary}
+            description={selectedNews?.story?.cards}
             author={selectedNews?.story?.["author-name"]}
           />
         )}
