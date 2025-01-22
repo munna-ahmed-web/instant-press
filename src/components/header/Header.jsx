@@ -17,14 +17,14 @@ const Header = () => {
         <div className="container mx-auto flex justify-between items-center">
           {/* Logo or Brand Name */}
           <div className="text-white font-bold text-lg">
-            <Link to="/" className="hover:opacity-90 transition-opacity">
+            <a href="/" className="hover:opacity-90 transition-opacity">
               <img
                 src={logo}
                 alt="Company Logo"
                 className="rounded-full object-cover w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16"
                 loading="lazy"
               />
-            </Link>
+            </a>
           </div>
 
           {/* Search Box */}
