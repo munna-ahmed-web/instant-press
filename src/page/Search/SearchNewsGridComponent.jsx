@@ -1,4 +1,3 @@
-import NewsCard from "../../components/shared/card/NewsCard";
 import { timeAgo } from "../../utils/utils";
 import SearchNewsCard from "../../components/shared/card/SearchNewsCard";
 
@@ -13,10 +12,10 @@ const SearchNewsGridComponent = ({ newsList }) => {
             newsList.map((news) => (
               <SearchNewsCard
                 key={news.id}
-                title={news?.item?.headline[0]}
+                title={news?.headline}
                 image={news?.story?.["hero-image-s3-key"]}
-                description={news?.story?.summary}
-                time={timeAgo(news?.story?.["updated-at"])}
+                description={news?.summary}
+                time={timeAgo(news?.["published-at"])}
                 link={`/news/${news.id}`}
               />
             ))}

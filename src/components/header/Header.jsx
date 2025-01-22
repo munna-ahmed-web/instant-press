@@ -2,6 +2,7 @@ import { useState } from "react";
 import logo from "../../assets/logo.webp";
 import { categoryListData } from "../../data/categoriListData";
 import { Link } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,7 +28,7 @@ const Header = () => {
           </div>
 
           {/* Search Box */}
-          <div className="hidden lg:block flex-1 mx-12">
+          {/* <div className="hidden lg:block flex-1 mx-12">
             <form>
               <input
                 type="text"
@@ -35,8 +36,8 @@ const Header = () => {
                 className="w-[200px] p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             </form>
-          </div>
-
+          </div> */}
+            
           {/* Hamburger Icon */}
           <button
             onClick={toggleMenu}
@@ -64,6 +65,12 @@ const Header = () => {
               isMenuOpen ? "block" : "hidden"
             } lg:flex lg:items-center space-x-4`}
           >
+            <Link to={'/search'}>
+          <button className="flex items-center space-x-5 w-[100px] p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 hover:bg-gray-200 bg-white">
+            <FaSearch className="text-black-600" /> {/* Search Icon */}
+            <span className="text-black-600">খুঁজুন</span> {/* Text */}
+          </button>
+            </Link>
             {categoryListData.map((item) => {
               return (
                 <Link
