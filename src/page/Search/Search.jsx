@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
 import { getNewsList, getNewsListBySearch } from "../../api/newsRequest";
-import NewsGridComponent from "../Home/NewsGridComponent";
 import LoadingSpinner from "../../components/shared/UI/LoadingSpinner";
 import Pagination from "rc-pagination";
 import "rc-pagination/assets/index.css"; // Import default styles
 import SearchNewsGridComponent from "./SearchNewsGridComponent";
+import FullWidthSearchInput from "../../components/shared/input/FullWidthSearchInput ";
+import { debounce } from "lodash";
 
 const Search = () => {
   //news state
@@ -18,38 +18,52 @@ const Search = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(15);
 
+  const handleSearch = (e) => {
+    if (e.target.value) {
+      setSearchValue(e.target.value);
+    } else {
+      setSearchValue("latest");
+    }
+  };
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  const fetchNewsListsBySearch = async () => {
-    try {
-      setLoading(true);
-      const data = await getNewsListBySearch(
-        searchValue,
-        currentPage,
-        itemsPerPage
-      );
-      setNewsListItems(data?.items);
-      setTotalItems(data?.total);
-      setLoading(false);
-    } catch (error) {
-      console.log("error getting from getnews function", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Debounced fetch function
+  const fetchNewsListsBySearchByDebounce = useCallback(
+    debounce(async (value, page) => {
+      try {
+        setLoading(true);
+        const data = await getNewsListBySearch(value, page, itemsPerPage);
+        setNewsListItems(data?.items);
+        setTotalItems(data?.total);
+        setLoading(false);
+      } catch (error) {
+        console.log("error getting from getnews function", error);
+      } finally {
+        setLoading(false);
+      }
+    }, 300),
+    []
+  );
 
+  // Effect to refetch when searchValue changes
   useEffect(() => {
-    fetchNewsListsBySearch();
-  }, [searchValue, currentPage]);
+    fetchNewsListsBySearchByDebounce(searchValue, currentPage);
+    // Cleanup on component unmount
+    return () => fetchNewsListsBySearchByDebounce.cancel();
+  }, [searchValue, currentPage, fetchNewsListsBySearchByDebounce]);
 
   return (
     <div>
+      <FullWidthSearchInput onChange={handleSearch} />
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <SearchNewsGridComponent newsList={newsListItems} />
+        <div>
+          <SearchNewsGridComponent newsList={newsListItems} />
+        </div>
       )}
 
       <div className="flex justify-center mb-4">
