@@ -11,7 +11,12 @@ const SearchNewsGridComponent = ({ newsList }) => {
             <SearchNewsCard
               key={news.id}
               title={news?.headline}
-              image={news?.story?.["hero-image-s3-key"]}
+              image={
+                news?.["hero-image-s3-key"] ||
+                news?.alternative?.home?.default?.["hero-image"]?.[
+                  "hero-image-s3-key"
+                ]
+              }
               description={news?.summary}
               time={timeAgo(news?.["published-at"])}
               link={`/news/${news.id}`}
