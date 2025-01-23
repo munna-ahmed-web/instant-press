@@ -10,6 +10,7 @@ const NewsCard = ({ title, image, description, time, link, className }) => {
         className="w-full h-48 object-cover"
         src={`${baseImageUrl}/${image}`}
         alt={title}
+        loading="lazy"
       />
       <div className="p-4">
         <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
