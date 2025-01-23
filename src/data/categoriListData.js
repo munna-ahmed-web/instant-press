@@ -14,11 +14,11 @@ export const categoryListData = [
     label: "বাংলাদেশ",
     value: "bangladesh",
   },
-  {
-    id: 7,
-    label: "অপরাধ",
-    value: "crime",
-  },
+  // {
+  //   id: 7,
+  //   label: "অপরাধ",
+  //   value: "crime",
+  // },
   {
     id: 8,
     label: "বিশ্ব",

@@ -4,7 +4,7 @@ const baseImageUrl = import.meta.env.VITE_IMAGE_BASE_URL;
 const SearchNewsCard = ({ title, image, description, time, link }) => {
   return (
     <>
-      <div className="max-w-2xl bg-white rounded-lg shadow-md overflow-hidden flex">
+      <div className="max-w-5xl bg-white rounded-lg shadow-md overflow-hidden flex">
         {/* Left Content */}
         <div className="p-6 flex flex-col justify-between w-2/3">
           <div>
