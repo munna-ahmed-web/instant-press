@@ -17,31 +17,20 @@ const Header = () => {
         <div className="container mx-auto flex justify-between items-center">
           {/* Logo or Brand Name */}
           <div className="text-white font-bold text-lg">
-            <Link to="/" className="hover:opacity-90 transition-opacity">
+            <a href="/" className="hover:opacity-90 transition-opacity">
               <img
                 src={logo}
                 alt="Company Logo"
                 className="rounded-full object-cover w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16"
                 loading="lazy"
               />
-            </Link>
+            </a>
           </div>
 
-          {/* Search Box */}
-          {/* <div className="hidden lg:block flex-1 mx-12">
-            <form>
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-[200px] p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-            </form>
-          </div> */}
-            
           {/* Hamburger Icon */}
           <button
             onClick={toggleMenu}
-            className="lg:hidden text-white focus:outline-none"
+            className="lg:hidden text-white absolute top-4 right-4 focus:outline-none z-10"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -62,14 +51,14 @@ const Header = () => {
           {/* Navbar Links */}
           <div
             className={`${
-              isMenuOpen ? "block" : "hidden"
-            } lg:flex lg:items-center space-x-4`}
+              isMenuOpen ? "flex flex-col" : "hidden"
+            } lg:flex lg:items-center lg:flex-row space-x-4`} // Change here to flex-row for desktop view
           >
             <Link to={'/search'}>
-          <button className="flex items-center space-x-5 w-[100px] p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 hover:bg-gray-200 bg-white">
-            <FaSearch className="text-black-600" /> {/* Search Icon */}
-            <span className="text-black-600">খুঁজুন</span> {/* Text */}
-          </button>
+              <button className="flex items-center space-x-2 w-[100px] p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 hover:bg-gray-200 bg-white">
+                <FaSearch className="text-black-600" /> {/* Search Icon */}
+                <span className="text-black-600">খুঁজুন</span> {/* Text */}
+              </button>
             </Link>
             {categoryListData.map((item) => {
               return (
@@ -87,14 +76,7 @@ const Header = () => {
 
         {/* Search Box for Mobile */}
         <div className={`mt-2 lg:hidden ${isMenuOpen ? "block" : "hidden"}`}>
-          <form>
-            <input
-              type="text"
-              placeholder="Search..."
-              className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300
-                           w-full sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4"
-            />
-          </form>
+          
         </div>
       </nav>
     </header>
@@ -102,3 +84,5 @@ const Header = () => {
 };
 
 export default Header;
+
+
